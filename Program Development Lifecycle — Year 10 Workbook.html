@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Program Development Lifecycle — Year 10 Workbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#eef1f6;--card:#fff;--rule:#c3cede;--ink:#1b2a4a;--soft:#45526e;--acc:#b6740f;--teal:#3e8e82;--coral:#c1554d;--code:#16223b;--codet:#dbe4f5;--hl:#fff1d6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#121a2b;--card:#1a2540;--rule:#34415f;--ink:#e8edf8;--soft:#a9b4cc;--acc:#e0a23c;--teal:#5fb8aa;--coral:#e8857d;--code:#0c1322;--hl:#3a3220;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#121a2b;--card:#1a2540;--rule:#34415f;--ink:#e8edf8;--soft:#a9b4cc;--acc:#e0a23c;--teal:#5fb8aa;--coral:#e8857d;--code:#0c1322;--hl:#3a3220;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Inter',system-ui,sans-serif;line-height:1.55}
+h1,h2,h3{font-family:'Bitter',Georgia,serif;margin:0 0 .4em}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px 40px}
+header{padding:30px 0 18px;border-bottom:3px solid var(--ink)}
+header .tag{display:inline-block;font-size:.78rem;color:var(--soft);border:1px solid var(--rule);padding:3px 10px;background:var(--card)}
+header h1{font-size:1.8rem;margin-top:12px;max-width:22ch}
+header p{color:var(--soft);max-width:62ch}
+.f{display:flex;gap:24px;flex-wrap:wrap;margin-top:14px}
+.f label{font-size:.85rem;color:var(--soft)}
+.f input{display:block;border:0;border-bottom:1px solid var(--soft);background:transparent;color:var(--ink);width:160px;padding:3px 2px;font:inherit}
+section{padding:28px 0;border-bottom:1px solid var(--rule)}
+section h2{font-size:1.3rem}
+.lead{color:var(--soft);max-width:70ch}
+.vg{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+@media(max-width:640px){.vg{grid-template-columns:1fr}}
+details.v{border:1px solid var(--rule);background:var(--card);padding:11px 14px}
+details.v summary{cursor:pointer;font-family:'Bitter',serif;font-weight:700}
+details.v p{margin:8px 0 0;font-size:.87rem;color:var(--soft)}
+.chip{display:inline-block;font-size:.66rem;font-weight:600;padding:2px 8px;border-radius:11px;margin-right:6px;color:#fff;background:var(--acc);white-space:nowrap}
+.chip.t{background:var(--teal)}.chip.c{background:var(--coral)}.chip.p{background:#6c6fbf}
+.box{border:1px solid var(--rule);background:var(--card);padding:14px;margin-top:14px}
+.tabs{display:flex;gap:4px;border-bottom:2px solid var(--rule);margin-top:16px;flex-wrap:wrap}
+.tab{padding:9px 16px;font:600 .86rem 'Inter',sans-serif;color:var(--soft);background:none;border:0;border-bottom:3px solid transparent;cursor:pointer}
+.tab.on{color:var(--ink);border-bottom-color:var(--acc)}
+.pane{display:none}.pane.on{display:block}
+.btn{font:600 .85rem 'Inter',sans-serif;padding:8px 16px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer;margin:6px 8px 0 0}
+.btn.s{background:transparent;color:var(--ink)}
+.note{font-size:.8rem;color:var(--soft);font-style:italic}
+.row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px dashed var(--rule);font-size:.88rem;flex-wrap:wrap}
+.row span{flex:1;min-width:180px}
+select,input[type=number]{padding:5px 7px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:inherit;font-size:.85rem}
+.ok{color:var(--teal);font-weight:600}.no{color:var(--coral);font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:760px){.two{grid-template-columns:1fr}}
+pre.code{background:var(--code);color:var(--codet);font:.78rem/1.6 'JetBrains Mono',monospace;padding:10px;margin:0;overflow-x:auto}
+pre.code .ln{display:block;padding:0 4px}
+pre.code .ln.h{background:#5a4513;color:#fff}
+.sc{display:flex;gap:10px;align-items:flex-start;overflow-x:auto;padding:6px 0}
+.sc .lv{display:flex;flex-direction:column;gap:6px;align-items:center}
+.mod{border:2px solid var(--ink);background:var(--card);padding:6px 10px;font-size:.78rem;text-align:center;min-width:110px}
+.tree{display:flex;flex-direction:column;gap:14px;align-items:center;overflow-x:auto}
+.tree .lvrow{display:flex;gap:18px;justify-content:center}
+.grp{display:flex;gap:6px}
+.fc{display:flex;flex-direction:column;align-items:center;gap:4px}
+.fc .s{font-size:.76rem;padding:6px 14px;border:2px solid var(--ink);background:var(--card);text-align:center;min-width:150px}
+.fc .s.h{background:var(--hl);border-color:var(--acc)}
+.fc .term{border-radius:20px}.fc .io{transform:skewX(-14deg)}.fc .io b{display:inline-block;transform:skewX(14deg);font-weight:500}
+.fc .dec{border-style:dashed}
+.fc .ar{color:var(--soft);font-size:.8rem;line-height:1}
+.log div{font:.78rem 'JetBrains Mono',monospace;margin:3px 0;color:var(--soft)}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+th,td{border:1px solid var(--rule);padding:5px 7px;text-align:left}
+th{background:var(--paper);color:var(--soft)}
+.q{border:1px solid var(--rule);background:var(--card);padding:14px;margin-top:12px}
+.q p{font-weight:600;margin:0 0 8px}
+.opt{display:block;width:100%;text-align:left;padding:8px 10px;margin:5px 0;border:1px solid var(--rule);background:var(--paper);color:var(--ink);font:.87rem 'Inter',sans-serif;cursor:pointer}
+.opt.good{background:rgba(62,142,130,.2);border-color:var(--teal)}.opt.bad{background:rgba(193,85,77,.2);border-color:var(--coral)}
+.fb{font-size:.82rem;color:var(--soft);display:none;margin-top:6px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);background:var(--ink);color:var(--paper);padding:7px 14px;font-size:.82rem;display:flex;justify-content:space-between;z-index:5}
+textarea{width:100%;min-height:70px;border:1px solid var(--rule);background:var(--card);color:var(--ink);padding:8px;font:inherit;margin-top:8px}
+details.a summary{cursor:pointer;color:var(--soft);font-size:.85rem;margin-top:8px}
+details.a div{font-size:.85rem;color:var(--soft);margin-top:6px;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<div class="bar"><span>Year 10 Computer Science · Program Development Lifecycle</span><span id="sc">Quiz: 0 / 0</span></div>
+<div class="wrap">
+<header>
+<span class="tag">IGCSE Computer Science · Year 10</span>
+<h1>The Program Development Lifecycle</h1>
+<p>A hands-on workbook: follow one real problem — a cinema ticket calculator — through analysis, design, coding and testing.</p>
+<div class="f"><label>Name<input></label><label>Class<input></label><label>Date<input></label></div>
+</header>
+
+<section>
+<h2>1. Key vocabulary</h2>
+<p class="lead">Open every card. The Studio below uses these words without re-explaining them.</p>
+<div class="vg">
+<details class="v"><summary>Analysis</summary><p>Finding out exactly what the program must do: the problem, the inputs, processes and outputs, and the requirements. Uses abstraction and decomposition.</p></details>
+<details class="v"><summary>Design</summary><p>Planning the solution before writing it, using structure charts, flowcharts and pseudocode.</p></details>
+<details class="v"><summary>Coding</summary><p>Writing the program in a programming language from the design, testing each part as it is written (iterative testing).</p></details>
+<details class="v"><summary>Testing</summary><p>Running the program with test data and comparing the actual result with the expected result, to find and fix errors.</p></details>
+<details class="v"><summary>Decomposition</summary><p>Breaking a big problem into smaller, easier sub-problems, each of which can become a module.</p></details>
+<details class="v"><summary>Abstraction</summary><p>Removing unnecessary detail so only what matters to the problem remains.</p></details>
+<details class="v"><summary>Pseudocode</summary><p>Structured, language-independent steps using keywords like INPUT, IF, OUTPUT, so the logic can be checked before coding.</p></details>
+<details class="v"><summary>Flowchart</summary><p>A diagram of the steps and decisions in order. Rounded box = start/end, parallelogram = input/output, rectangle = process, diamond = decision.</p></details>
+<details class="v"><summary>Structure chart</summary><p>A top-down diagram showing how a program is decomposed into modules and sub-modules, with the main program at the top.</p></details>
+<details class="v"><summary>Test data</summary><p>Normal = valid and typical. Extreme = the largest/smallest valid values. Boundary = values at the edge of valid/invalid. Abnormal = invalid, must be rejected.</p></details>
+</div>
+</section>
+
+<section>
+<h2>2. The Ticket Studio</h2>
+<p class="lead">The problem: a cinema charges by age (under 12: $6, 12–64: $10, 65 and over: $7). Groups of 5 or more tickets get 10% off. Tickets per order: 1–10. Work through the four stages in order.</p>
+<div class="tabs"><button class="tab on" data-t="a">1 Analysis</button><button class="tab" data-t="d">2 Design</button><button class="tab" data-t="c">3 Coding</button><button class="tab" data-t="x">4 Testing</button></div>
+
+<div class="pane on" id="p-a"><div class="box">
+<p><span class="chip">ABSTRACTION</span><span class="chip p">INPUT</span><span class="chip t">PROCESS</span><span class="chip c">OUTPUT</span>Classify each piece of information. Anything not needed to calculate the price is removed.</p>
+<div id="ana"></div>
+<button class="btn" id="anaCheck">Check my analysis</button><div id="anaMsg" class="note" style="margin-top:8px"></div>
+</div></div>
+
+<div class="pane" id="p-d"><div class="box">
+<p><span class="chip">DECOMPOSITION</span>Press the button to decompose the problem level by level into a structure chart.</p>
+<div class="tree" id="tree"></div>
+<button class="btn" id="dec">Decompose next level</button><button class="btn s" id="decR">Reset</button>
+<hr style="border:0;border-top:1px solid var(--rule);margin:16px 0">
+<p><span class="chip t">FLOWCHART</span><span class="chip">PSEUDOCODE</span>Hover a line of pseudocode (or a flowchart box) to see its partner.</p>
+<div class="two"><div class="fc" id="fc"></div><pre class="code" id="pc"></pre></div>
+</div></div>
+
+<div class="pane" id="p-c"><div class="box">
+<p><span class="chip c">CODING</span>The pseudocode is translated into a real language. Enter inputs and run it.</p>
+<div class="two"><pre class="code" id="py"></pre><div>
+<div class="row"><span>Age</span><input type="number" id="rAge" value="30" style="width:80px"></div>
+<div class="row"><span>Tickets</span><input type="number" id="rTix" value="5" style="width:80px"></div>
+<button class="btn" id="run">Run program</button>
+<div class="log" id="log"><div>Press Run to trace the program.</div></div></div></div>
+</div></div>
+
+<div class="pane" id="p-x"><div class="box">
+<p><span class="chip t">TESTING</span>Run every test and compare expected with actual. Then switch on the hidden bug and run again.</p>
+<label class="note"><input type="checkbox" id="bug"> Switch on the hidden bug (a typing slip made during coding)</label><br>
+<button class="btn" id="runAll">Run all tests</button>
+<table><thead><tr><th>Test type</th><th>Age</th><th>Tickets</th><th>Expected</th><th>Actual</th><th>Result</th></tr></thead><tbody id="tt"></tbody></table>
+<p class="note" id="tmsg"></p>
+</div></div>
+</section>
+
+<section>
+<h2>3. Multiple choice</h2>
+<div id="quiz"></div>
+</section>
+
+<section>
+<h2>4. Structured questions</h2>
+<div class="q"><p>(a) [2] State what is meant by decomposition and give one benefit.</p><textarea></textarea><details class="a"><summary>Model answer</summary><div>Breaking a problem into smaller sub-problems (modules). Benefit: each part is easier to understand, design, code and test, and different people can work on different modules.</div></details></div>
+<div class="q"><p>(b) [3] A program asks for a mark from 0 to 100. Give one example each of normal, boundary and abnormal test data and say what should happen.</p><textarea></textarea><details class="a"><summary>Model answer</summary><div>Normal: 55 accepted. Boundary/extreme: 0 or 100 accepted (and 101 or -1 just outside, rejected). Abnormal: "abc" or 500 rejected with an error message.</div></details></div>
+<div class="q"><p>(c) [3] Describe two differences between a flowchart and pseudocode.</p><textarea></textarea><details class="a"><summary>Model answer</summary><div>A flowchart uses standard symbols and arrows to show the flow visually; pseudocode uses text keywords. Pseudocode is closer to real code and easier to convert; a flowchart makes the order of decisions easier to see at a glance.</div></details></div>
+</section>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab,.pane').forEach(x=>x.classList.remove('on'));b.classList.add('on');$('p-'+b.dataset.t).classList.add('on')});
+
+/* Analysis */
+const ITEMS=[["Age of the customer","Input"],["Number of tickets wanted","Input"],["Look up the unit price for the age","Process"],["Apply the group discount","Process"],["Total cost shown to customer","Output"],["Customer’s favourite colour","Not needed"],["Title of the film","Not needed"]];
+$('ana').innerHTML=ITEMS.map((it,i)=>`<div class="row"><span>${it[0]}</span><select id="s${i}"><option>Choose…</option><option>Input</option><option>Process</option><option>Output</option><option>Not needed</option></select></div>`).join('');
+$('anaCheck').onclick=()=>{let n=0;ITEMS.forEach((it,i)=>{const v=$('s'+i).value;if(v===it[1])n++});
+$('anaMsg').innerHTML=`${n} / ${ITEMS.length} correct. `+(n===ITEMS.length?'<span class="ok">Well done: you used abstraction to remove the colour and film title, which do not affect the price.</span>':'<span class="no">Think again: what does the price calculation actually need?</span>')};
+
+/* Structure chart */
+const SC=[["Ticket Price Program"],["Get and check input","Calculate price","Show result"],[["Get age","Get tickets","Validate"],["Find unit price","Apply discount","Calculate total"],["Format total","Output total"]]];
+let lvl=0;
+function drawTree(){let h=`<div class="mod">${SC[0][0]}</div>`;
+if(lvl>=1)h+=`<div class="lvrow">${SC[1].map(m=>`<div class="mod">${m}</div>`).join('')}</div>`;
+if(lvl>=2)h+=`<div class="lvrow">${SC[2].map(g=>`<div class="grp">${g.map(m=>`<div class="mod" style="min-width:80px">${m}</div>`).join('')}</div>`).join('')}</div>`;
+$('tree').innerHTML=h;$('dec').disabled=lvl>=2}
+$('dec').onclick=()=>{lvl++;drawTree()};$('decR').onclick=()=>{lvl=0;drawTree()};drawTree();
+
+/* Pseudocode + flowchart linked */
+const PC=[["INPUT Age, Tickets",1],["IF Age < 0 OR Age > 120 OR Tickets < 1 OR Tickets > 10 THEN",2],["   OUTPUT \"Invalid input\"",3],["ELSE",0],["   IF Age < 12 THEN Price ← 6",4],["   ELSE IF Age >= 65 THEN Price ← 7",4],["   ELSE Price ← 10",4],["   Total ← Price * Tickets",5],["   IF Tickets >= 5 THEN Total ← Total * 0.9",6],["   OUTPUT Total",7],["ENDIF",0]];
+$('pc').innerHTML=PC.map((l,i)=>`<span class="ln" data-g="${l[1]}">${String(i+1).padStart(2)}  ${l[0].replace(/</g,'&lt;')}</span>`).join('');
+const FC=[["term","START",0],["io","INPUT Age, Tickets",1],["dec","Valid input?",2],["io","OUTPUT “Invalid input” (if No)",3],["s","Choose Price by Age",4],["s","Total ← Price × Tickets",5],["dec","Tickets ≥ 5? then Total × 0.9",6],["io","OUTPUT Total",7],["term","END",0]];
+$('fc').innerHTML=FC.map((f,i)=>`${i?'<div class="ar">▼</div>':''}<div class="s ${f[0]}" data-g="${f[2]}">${f[0]==='io'?'<b>'+f[1]+'</b>':f[1]}</div>`).join('');
+function hl(g,on){if(!+g)return;document.querySelectorAll(`[data-g="${g}"]`).forEach(e=>e.classList.toggle('h',on))}
+document.querySelectorAll('[data-g]').forEach(e=>{e.onmouseenter=()=>hl(e.dataset.g,true);e.onmouseleave=()=>hl(e.dataset.g,false)});
+
+/* Program */
+function prog(age,t,bug){const tr=[];tr.push(["INPUT","Age = "+age+", Tickets = "+t]);
+if(age<0||age>120||t<1||t>10){tr.push(["DECISION","Input outside valid range"]);return{out:"Invalid input",tr}}
+tr.push(["DECISION","Input is valid"]);let p;
+if(age<12)p=6;else if(bug?age>65:age>=65)p=7;else p=10;
+tr.push(["PROCESS","Price = "+p]);let tot=p*t;tr.push(["PROCESS","Total = "+p+" × "+t+" = "+tot]);
+if(t>=5){tot=tot*0.9;tr.push(["PROCESS","Group discount: Total = "+tot.toFixed(2)])}
+return{out:tot.toFixed(2),tr}}
+$('py').innerHTML=["age = int(input())","tickets = int(input())","if age < 0 or age > 120 or tickets < 1 or tickets > 10:","    print(\"Invalid input\")","else:","    if age < 12:","        price = 6","    elif age >= 65:","        price = 7","    else:","        price = 10","    total = price * tickets","    if tickets >= 5:","        total = total * 0.9","    print(total)"].map(l=>`<span class="ln">${l}</span>`).join('');
+const tagc={INPUT:'p',DECISION:'',PROCESS:'t'};
+$('run').onclick=()=>{const r=prog(+$('rAge').value,+$('rTix').value,false);
+$('log').innerHTML=r.tr.map(x=>`<div><span class="chip ${tagc[x[0]]||''}">${x[0]}</span>${x[1]}</div>`).join('')+`<div><span class="chip c">OUTPUT</span><b>${r.out}</b></div>`};
+
+/* Testing */
+const TESTS=[["Normal",30,2,"20.00"],["Normal",8,3,"18.00"],["Normal",40,5,"45.00"],["Extreme",0,1,"6.00"],["Extreme",120,10,"63.00"],["Boundary",11,1,"6.00"],["Boundary",12,1,"10.00"],["Boundary",65,1,"7.00"],["Abnormal",-5,2,"Invalid input"],["Abnormal",30,11,"Invalid input"]];
+$('tt').innerHTML=TESTS.map((t,i)=>`<tr><td>${t[0]}</td><td>${t[1]}</td><td>${t[2]}</td><td>${t[3]}</td><td id="ta${i}">–</td><td id="tr${i}">–</td></tr>`).join('');
+$('runAll').onclick=()=>{const bug=$('bug').checked;let f=0,normalFail=0;
+TESTS.forEach((t,i)=>{const o=prog(t[1],t[2],bug).out;const p=o===t[3];if(!p){f++;if(t[0]==="Normal")normalFail++}
+$('ta'+i).textContent=o;$('tr'+i).innerHTML=p?'<span class="ok">Pass</span>':'<span class="no">FAIL</span>'});
+$('tmsg').textContent=f?`${f} test(s) failed. Normal data failures: ${normalFail}. Only the boundary test caught the slip: this is why boundary and extreme data matter.`:'All tests passed.'};
+
+/* Quiz */
+const Q=[["Which stage of the lifecycle involves identifying the inputs, processes and outputs?",["Analysis","Design","Coding","Testing"],0,"Analysis finds out what the program must do."],
+["Removing unnecessary detail so only essentials remain is called:",["Decomposition","Abstraction","Iteration","Validation"],1,"That is abstraction."],
+["Breaking a problem into smaller sub-problems is called:",["Abstraction","Testing","Decomposition","Coding"],2,"That is decomposition."],
+["Which diagram shows a program as a hierarchy of modules?",["Flowchart","Structure chart","Truth table","Trace table"],1,"A structure chart is a top-down hierarchy."],
+["In a flowchart, which shape shows a decision?",["Rectangle","Parallelogram","Diamond","Rounded box"],2,"Diamonds hold yes/no decisions."],
+["Which shape shows an input or output?",["Parallelogram","Diamond","Rectangle","Circle"],0,"Parallelograms are for input/output."],
+["Which test data checks values at the edge of the valid range?",["Normal","Boundary","Random","Abnormal"],1,"Boundary data tests the edges."],
+["Why is pseudocode written before coding?",["It runs faster","It lets logic be checked without worrying about syntax","Computers need it","It replaces testing"],1,"Pseudocode separates logic from language syntax."]];
+let a=0,c=0;
+Q.forEach((q,qi)=>{const d=document.createElement('div');d.className='q';d.innerHTML=`<p>${qi+1}. ${q[0]}</p>`;const fb=document.createElement('div');fb.className='fb';
+q[1].forEach((o,oi)=>{const b=document.createElement('button');b.className='opt';b.textContent=o;b.onclick=()=>{if(d.dataset.x)return;d.dataset.x=1;a++;
+d.querySelectorAll('.opt').forEach((x,i)=>{if(i===q[2])x.classList.add('good');else if(i===oi)x.classList.add('bad')});
+if(oi===q[2])c++;fb.style.display='block';fb.textContent=(oi===q[2]?'Correct. ':'Not quite. ')+q[3];$('sc').textContent=`Quiz: ${c} / ${a}`};d.appendChild(b)});
+d.appendChild(fb);$('quiz').appendChild(d)});
+</script>
+</body>
+</html>
